@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace Fiap.CloseRain.Domain.Entities
 {
@@ -14,5 +11,12 @@ namespace Fiap.CloseRain.Domain.Entities
         public DateTime Nascimento { get; set; }
         public bool Ativo { get; set; }
 
+        public void Valido()
+        {
+            if (string.IsNullOrWhiteSpace(this.Email))
+            {
+                throw new Exception("Usuario sem endereço de email");
+            }
+        }
     }
 }
