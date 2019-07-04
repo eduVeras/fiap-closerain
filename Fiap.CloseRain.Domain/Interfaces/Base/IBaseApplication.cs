@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Fiap.CloseRain.Domain.Interfaces
+namespace Fiap.CloseRain.Domain.Interfaces.Base
 {
-    public interface IBaseRepository<TEntity, in PK> where TEntity : class
+    public interface IBaseApplication<TEntity,in TPk> where TEntity : class
     {
         Task InserirAsync(TEntity entity);
         Task AtualizarAsync(TEntity entity);
         Task<IList<TEntity>> BuscarAsync();
-        Task<TEntity> BuscarAsync(PK pk);
-        Task DeletarAsync(PK pk);
+        Task<TEntity> BuscarAsync(TPk pk);
+        Task DeletarAsync(TPk pk);
     }
 }

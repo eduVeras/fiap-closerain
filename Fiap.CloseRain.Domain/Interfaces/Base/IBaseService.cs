@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Fiap.CloseRain.Domain.Interfaces
+namespace Fiap.CloseRain.Domain.Interfaces.Base
 {
     public interface IBaseService
     {

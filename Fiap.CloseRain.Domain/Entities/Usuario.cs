@@ -11,7 +11,7 @@ namespace Fiap.CloseRain.Domain.Entities
         public DateTime Nascimento { get; set; }
         public bool Ativo { get; set; }
 
-        public void Valido()
+        public void Valid()
         {
             if (string.IsNullOrWhiteSpace(this.Email))
             {
