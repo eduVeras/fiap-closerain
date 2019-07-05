@@ -7,16 +7,14 @@ namespace Fiap.CloseRain.Domain.Entities
     {
         public Incidente() { }
 
-        public Incidente(int idUsuario, int idRegiao, ETipoIncidente tipoIncidente, Usuario usuario, Regiao regiao, bool publicado, DateTime dataIncidente, DateTime dataPublicacao)
-        {
-            IdUsuario = idUsuario;
-            IdRegiao = idRegiao;
+        public Incidente(ETipoIncidente tipoIncidente, Usuario usuario, Regiao regiao)
+        {   
             TipoIncidente = tipoIncidente;
             Usuario = usuario;
             Regiao = regiao;
-            Publicado = publicado;
-            DataIncidente = dataIncidente;
-            DataPublicacao = dataPublicacao;
+            Publicado = false;
+            DataIncidente = DateTime.Now;
+            DataPublicacao = null;
         }
 
         public int IdUsuario { get; set; }
@@ -26,7 +24,7 @@ namespace Fiap.CloseRain.Domain.Entities
         public Regiao Regiao { get; set; }
         public bool Publicado { get; set; }
         public DateTime DataIncidente { get; set; }
-        public DateTime DataPublicacao { get; set; }
+        public DateTime? DataPublicacao { get; set; }
 
     }
 }
