@@ -10,6 +10,8 @@ namespace Fiap.CloseRain.Domain.Entities
         public string Senha { get; set; }
         public DateTime Nascimento { get; set; }
         public bool Ativo { get; set; }
+        public DateTime DataCadastro { get; set; }
+
 
         public void Valid()
         {
