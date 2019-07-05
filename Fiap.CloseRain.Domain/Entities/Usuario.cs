@@ -12,12 +12,12 @@ namespace Fiap.CloseRain.Domain.Entities
         {   
             Nome = nome;
             Email = email;
-            SetCryptSenha(senha);
+            Senha = senha;
             Nascimento = nascimento;
             Ativo = true;
             DataCadastro = DateTime.Now;
-
             Valid();
+            SetCryptSenha(senha);
         }
 
         public int IdUsuario { get; set; }
