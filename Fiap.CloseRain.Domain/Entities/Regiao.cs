@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Fiap.CloseRain.Domain.Model;
+using Fiap.CloseRain.Domain.Validation;
 
 namespace Fiap.CloseRain.Domain.Entities
 {
     public class Regiao
     {
         public Regiao() { }
+
+        public Regiao(int idRegiao, string cep, string logradouro,  string bairro, string municipio, string uf, string pais, double latitude, double longitude)
+        {   
+            Cep = cep;
+            Logradouro = logradouro;
+            Bairro = bairro;
+            Municipio = municipio;
+            Uf = uf.ToUpper();
+            Pais = pais;
+            Latitude = latitude;
+            Longitude = longitude;
+        }
         
         public int IdRegiao { get; set; }
         public string Cep { get; set; }
@@ -20,19 +31,10 @@ namespace Fiap.CloseRain.Domain.Entities
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        public void IsValid()
+        public Notification IsValid()
         {
-
-        }
-
-        private bool IsValidCep()
-        {
-            return true;
-        }
-
-        private bool IsValidUf()
-        {
-            return true;
+            var validate =  new RegiaoValidator().Validate(this);
+            return validate;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Fiap.CloseRain.Domain.Entities
 {
     public class Incidente
     {
-        public Incidente() { }
+        protected Incidente() { }
 
         public Incidente(ETipoIncidente tipoIncidente, Usuario usuario, Regiao regiao)
         {   
@@ -26,5 +26,16 @@ namespace Fiap.CloseRain.Domain.Entities
         public DateTime DataIncidente { get; set; }
         public DateTime? DataPublicacao { get; set; }
 
+        public void Valid()
+        {
+            Usuario.IsValid();
+            Regiao.IsValid();
+        }
+
+        public void OnSuccessPublish()
+        {
+            this.DataPublicacao = DateTime.Now;
+            this.Publicado = true;
+        }
     }
 }

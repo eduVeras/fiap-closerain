@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using Fiap.CloseRain.Domain.Model;
+using Fiap.CloseRain.Domain.Validation;
 
 namespace Fiap.CloseRain.Domain.Entities
 {
@@ -16,7 +18,6 @@ namespace Fiap.CloseRain.Domain.Entities
             Nascimento = nascimento;
             Ativo = true;
             DataCadastro = DateTime.Now;
-            Valid();
             SetCryptSenha(senha);
         }
 
@@ -29,21 +30,11 @@ namespace Fiap.CloseRain.Domain.Entities
         public DateTime DataCadastro { get; set; }
 
 
-        public void Valid()
+        public Notification IsValid()
         {
-            if (string.IsNullOrWhiteSpace(Nome))
-                throw new ArgumentNullException(nameof(Nome), "Nome é obrigatorio");
-
-            if (string.IsNullOrWhiteSpace(this.Email))
-                throw new ArgumentNullException(nameof(Email), "Email obrigatório.");
-
-            if (string.IsNullOrWhiteSpace(Senha))
-                throw new ArgumentNullException(nameof(Senha), "Nome é obrigatorio");
-
-            if (Nascimento.AddYears(18) > DateTime.Now)
-                throw new ArgumentException("Usuario não possui a idade minima para cadastro");
+            var validate = new UsuarioValidator().Validate(this);
+            return validate;
         }
-
 
         public void AtualizarDataCadasto(DateTime data)
         {
@@ -76,5 +67,11 @@ namespace Fiap.CloseRain.Domain.Entities
             }
 
         }
+
+        public void Desativar()
+        {
+            this.Ativo = false;
+        }
+
     }
 }
