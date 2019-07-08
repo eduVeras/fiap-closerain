@@ -25,13 +25,16 @@ namespace Fiap.CloseRain.Domain.Entities
         }
 
         public int IdUsuario { get; set; }
+        public int IdRegiao { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
         public DateTime Nascimento { get; set; }
+        public string Telefone { get; set; }
         public bool Ativo { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataUltimaAtualizacao { get; set; }
+        public Regiao Regiao { get; set; }
         public IList<Incidente> Incidentes { get; set; }
 
         /// <summary>
