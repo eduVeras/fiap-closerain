@@ -12,7 +12,7 @@ namespace Fiap.CloseRain.Domain.Validation
                 .NotEmpty()
                 .WithMessage("Nome deve ser preenchido.")
                 .MinimumLength(5)
-                .WithMessage("Tamanha minimo de nome não informado.");
+                .WithMessage("Tamanho minimo de nome não informado.");
 
 
             RuleFor(x => x.Email)
@@ -30,15 +30,15 @@ namespace Fiap.CloseRain.Domain.Validation
             RuleFor(x => x.Nascimento)
                 .NotEqual(DateTime.MinValue)
                 .WithMessage("Data de nascimento deve ser informada.")
-                .Must(nascimento => BeOverMinimum(nascimento, 18))
+                .Must(BeOver18)
                 .WithMessage("Usuario não possui a idade minima para cadastro");
 
         }
 
 
-        public bool BeOverMinimum(DateTime nascimento, int minimum)
+        public bool BeOver18(DateTime nascimento)
         {
-            return nascimento.AddYears(minimum) > DateTime.Now;
+            return nascimento.AddYears(18) > DateTime.Now;
         }
     }
 }

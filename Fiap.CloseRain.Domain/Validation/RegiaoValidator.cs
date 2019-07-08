@@ -7,7 +7,7 @@ namespace Fiap.CloseRain.Domain.Validation
     {
         public RegiaoValidator()
         {
-            RuleFor(x => x.Cep).NotNull().Length(8);
+            RuleFor(x => x.Cep).NotNull().Length(8).Must(BeAValidCep).WithMessage("Cep inválido");
             RuleFor(x => x.Logradouro).NotNull().MinimumLength(5);
             RuleFor(x => x.Bairro).NotNull().MinimumLength(5);
             RuleFor(x => x.Municipio).NotNull();
@@ -15,6 +15,11 @@ namespace Fiap.CloseRain.Domain.Validation
             RuleFor(x => x.Pais).NotNull();
             RuleFor(x => x.Latitude).NotNull();
             RuleFor(x => x.Longitude).NotNull();
+        }
+
+        public bool BeAValidCep(string cep)
+        {
+            return true;
         }
     }
 }

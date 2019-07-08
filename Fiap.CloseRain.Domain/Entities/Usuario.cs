@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Fiap.CloseRain.Domain.Model;
@@ -19,6 +21,7 @@ namespace Fiap.CloseRain.Domain.Entities
             Ativo = true;
             DataCadastro = DateTime.Now;
             SetCryptSenha(senha);
+            Incidentes = new List<Incidente>();
         }
 
         public int IdUsuario { get; set; }
@@ -28,7 +31,23 @@ namespace Fiap.CloseRain.Domain.Entities
         public DateTime Nascimento { get; set; }
         public bool Ativo { get; set; }
         public DateTime DataCadastro { get; set; }
+        public DateTime DataUltimaAtualizacao { get; set; }
+        public IList<Incidente> Incidentes { get; set; }
 
+        /// <summary>
+        /// Ultima publicação de um incidente em minutos.
+        /// </summary>
+        private int? UltimaPublicacao
+        {
+            get
+            {
+                var dataPublicacao = Incidentes.OrderByDescending(x => x.DataPublicacao).FirstOrDefault();
+                if (dataPublicacao != null)
+                    return (DateTime.Now - dataPublicacao.DataPublicacao)?.Minutes;
+                return null;
+
+            }
+        }
 
         public Notification IsValid()
         {
@@ -42,6 +61,29 @@ namespace Fiap.CloseRain.Domain.Entities
                 throw new ArgumentException("Data menor que a existente.", nameof(data));
 
             this.DataCadastro = data;
+        }
+
+        public bool PodePublicarIncidente()
+        {
+            var ultimoIncidente = Incidentes.OrderByDescending(x => x.DataIncidente).FirstOrDefault();
+
+            if (ultimoIncidente == null)
+                return true;
+
+            if (ultimoIncidente.Publicado && UltimaPublicacao > 30)
+                return true;
+
+            if (UltimaPublicacao < 10)
+                return false;
+
+            return false;
+
+        }
+
+        public void Desativar()
+        {
+            this.Ativo = false;
+            this.DataUltimaAtualizacao = DateTime.Now;
         }
 
         private void GetCryptSenha()
@@ -66,11 +108,6 @@ namespace Fiap.CloseRain.Domain.Entities
                 this.Senha = builder.ToString();
             }
 
-        }
-
-        public void Desativar()
-        {
-            this.Ativo = false;
         }
 
     }
