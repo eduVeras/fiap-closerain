@@ -1,14 +1,15 @@
 ﻿using Fiap.CloseRain.Domain.Enum;
 using System;
+using Fiap.CloseRain.Domain.Model;
 
 namespace Fiap.CloseRain.Domain.Entities
 {
-    public class Incidente
+    public sealed class Incidente
     {
-        protected Incidente() { }
+        private Incidente() { }
 
         public Incidente(ETipoIncidente tipoIncidente, Usuario usuario, Regiao regiao)
-        {   
+        {
             TipoIncidente = tipoIncidente;
             Usuario = usuario;
             Regiao = regiao;
@@ -26,10 +27,19 @@ namespace Fiap.CloseRain.Domain.Entities
         public DateTime DataIncidente { get; set; }
         public DateTime? DataPublicacao { get; set; }
 
-        public void Valid()
+        public Notification<Incidente> IsValid()
         {
-            Usuario.IsValid();
-            Regiao.IsValid();
+            var notification = new Notification<Incidente>(this);
+
+            var usuario = Usuario.IsValid();
+            if (usuario.HasErrors())
+                notification.AddError(usuario.Errors);
+
+            var regiao = Regiao.IsValid();
+            if (regiao.HasErrors())
+                notification.AddError(regiao.Errors);
+
+            return notification;
         }
 
         public void OnSuccessPublish()
@@ -37,5 +47,11 @@ namespace Fiap.CloseRain.Domain.Entities
             this.DataPublicacao = DateTime.Now;
             this.Publicado = true;
         }
+
+        /*
+         * SELECT * 
+         *  FROM Incidente 
+         *  WHERE acos(sin(radians(-23.5919651)) * sin(Lat) + cos(1.3963) * cos(Lat) * cos(Lon - (radians(-46.6910617)))) * 6371 <= 5;
+         */
     }
 }

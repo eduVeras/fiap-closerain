@@ -1,27 +1,35 @@
-﻿using FluentValidation.Results;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Fiap.CloseRain.Domain.Model
 {
-    public class Notification
+    public class Notification<T> where T : class
     {
-        public Notification(bool success, Dictionary<string,string> errors)
+        private Notification() { }
+
+        public Notification(T data)
         {
-            Success = success;
-            Errors = errors;
+            Success = !HasErrors();
+            Data = data;
+            Errors = new Dictionary<string, string>();
         }
 
         public bool Success { get; set; }
-        /// <summary>
-        /// Objeto contendo propriedade e o erro
-        /// </summary>
-        public Dictionary<string,string> Errors { get; set; }
+        public T Data { get; set; }
+        public Dictionary<string, string> Errors { get; set; }
+        public bool HasErrors() => Errors.Any();
 
-        public static implicit operator Notification(ValidationResult validator)
+        public void AddError(string property, string message)
         {
-            var erros = validator.Errors.Select(x => new KeyValuePair<string, string>(x.PropertyName, x.ErrorMessage)).ToDictionary(x => x.Key, v => v.Value);
-            return new Notification(validator.IsValid, erros);
+            this.Errors.Add(property, message);
+        }
+
+        public void AddError(Dictionary<string, string> erroDictionary)
+        {
+            foreach (var item in erroDictionary)
+            {
+                this.Errors.Add(item.Key, item.Value);
+            }
         }
     }
 }

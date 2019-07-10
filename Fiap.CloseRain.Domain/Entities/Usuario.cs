@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Fiap.CloseRain.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Fiap.CloseRain.Domain.Model;
-using Fiap.CloseRain.Domain.Validation;
 
 namespace Fiap.CloseRain.Domain.Entities
 {
-    public class Usuario
+    public sealed class Usuario
     {
-        protected Usuario() { }
+        private Usuario() { }
 
         public Usuario(string nome, string email, string senha, DateTime nascimento)
-        {   
+        {
             Nome = nome;
             Email = email;
             Senha = senha;
@@ -23,6 +22,7 @@ namespace Fiap.CloseRain.Domain.Entities
             SetCryptSenha(senha);
             Incidentes = new List<Incidente>();
         }
+
 
         public int IdUsuario { get; set; }
         public int IdRegiao { get; set; }
@@ -48,14 +48,35 @@ namespace Fiap.CloseRain.Domain.Entities
                 if (dataPublicacao != null)
                     return (DateTime.Now - dataPublicacao.DataPublicacao)?.Minutes;
                 return null;
-
             }
         }
 
-        public Notification IsValid()
+        public Notification<Usuario> IsValid()
         {
-            var validate = new UsuarioValidator().Validate(this);
-            return validate;
+            var notification = new Notification<Usuario>(this);
+
+            if (string.IsNullOrWhiteSpace(Nome))
+                notification.AddError(nameof(Nome), "Nome deve ser preenchido.");
+
+            if (Nome.Length < 5)
+                notification.AddError(nameof(Nome), "Tamanho minimo de nome não informado.");
+
+            if (string.IsNullOrWhiteSpace(Email))
+                notification.AddError(nameof(Email), "Email obrigatório.");
+
+            if (string.IsNullOrWhiteSpace(Senha))
+                notification.AddError(nameof(Senha), "Senha obrigatória.");
+
+            if (Senha.Length < 8)
+                notification.AddError(nameof(Senha), "Tamanho minimo de nome não informado.");
+
+            if (Nascimento.Equals(DateTime.MinValue))
+                notification.AddError(nameof(Nascimento), "Nascimento obrigatorio");
+
+            if (!BeOver18(Nascimento))
+                notification.AddError(nameof(Nascimento), "Usuario não possui a idade minima para cadastro");
+
+            return notification;
         }
 
         public void AtualizarDataCadasto(DateTime data)
@@ -64,6 +85,7 @@ namespace Fiap.CloseRain.Domain.Entities
                 throw new ArgumentException("Data menor que a existente.", nameof(data));
 
             this.DataCadastro = data;
+            this.DataUltimaAtualizacao = DateTime.Now;
         }
 
         public bool PodePublicarIncidente()
@@ -111,6 +133,11 @@ namespace Fiap.CloseRain.Domain.Entities
                 this.Senha = builder.ToString();
             }
 
+        }
+
+        public bool BeOver18(DateTime nascimento)
+        {
+            return nascimento.AddYears(18) > DateTime.Now;
         }
 
     }
