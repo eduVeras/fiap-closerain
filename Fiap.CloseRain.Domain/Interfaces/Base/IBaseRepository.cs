@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Fiap.CloseRain.Domain.Interfaces.Base
 {
-    public interface IBaseRepository<TEntity, in TPk> : IDisposable where TEntity : class
+    public interface IBaseRepository<TEntity, in TPk> where TEntity : class
     {
         Task InserirAsync(TEntity entity);
         Task AtualizarAsync(TEntity entity);

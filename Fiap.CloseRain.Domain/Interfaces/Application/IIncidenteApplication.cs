@@ -3,7 +3,7 @@ using Fiap.CloseRain.Domain.Interfaces.Base;
 
 namespace Fiap.CloseRain.Domain.Interfaces.Application
 {
-    public interface IIncidenteRepository : IBaseApplication<Incidente, int>
+    public interface IIncidenteApplication : IBaseApplication<Incidente, int>
     {
         
     }

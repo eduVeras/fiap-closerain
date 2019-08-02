@@ -5,6 +5,6 @@ namespace Fiap.CloseRain.Domain.Interfaces.Application
 {
     public interface IUsuarioApplication : IBaseApplication<Usuario, int>
     {
-        
+        bool Autenticar(Usuario usuario);
     }
 }

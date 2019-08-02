@@ -5,6 +5,6 @@ namespace Fiap.CloseRain.Domain.Interfaces.Repository
 {
     public interface IUsuarioRepository : IBaseRepository<Usuario, int>
     {
-
+        bool Autenticar(Usuario usuario);
     }
 }
