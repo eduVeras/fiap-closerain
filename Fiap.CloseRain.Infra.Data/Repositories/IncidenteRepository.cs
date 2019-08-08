@@ -11,6 +11,7 @@ namespace Fiap.CloseRain.Infra.Data.Repositories
     {
         public async Task<IEnumerable<Incidente>> BuscarPorRegiaoAsync(double latitude, double longitude)
         {
+
             throw new NotImplementedException();
         }
 

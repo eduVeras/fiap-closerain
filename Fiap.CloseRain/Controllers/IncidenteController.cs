@@ -11,6 +11,8 @@ namespace Fiap.CloseRain.Controllers
     [ApiController]
     public class IncidenteController : ControllerBase
     {
+
+        
         // GET: api/Incidente
         [HttpGet]
         public IEnumerable<string> Get()

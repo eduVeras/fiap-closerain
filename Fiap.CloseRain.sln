@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.CloseRain", "Fiap.CloseRain\Fiap.CloseRain.csproj", "{3F33B1F5-2EF0-42B7-8912-8A07641B4A45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.CloseRain", "Fiap.CloseRain\Fiap.CloseRain.csproj", "{3F33B1F5-2EF0-42B7-8912-8A07641B4A45}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Api", "01 - Api", "{58F8FDC8-BABC-4B38-80CF-A87C98B70FA7}"
 EndProject
@@ -13,17 +13,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Domain", "03 - Domain"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Infra", "04 - Infra", "{4DC0B3F7-A730-44A3-A9AF-6A25F5605B71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.CloseRain.Infra.Data", "Fiap.CloseRain.Infra.Data\Fiap.CloseRain.Infra.Data.csproj", "{EEB4345A-6B49-4D60-91AB-BD1E48DB6EF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.CloseRain.Infra.Data", "Fiap.CloseRain.Infra.Data\Fiap.CloseRain.Infra.Data.csproj", "{EEB4345A-6B49-4D60-91AB-BD1E48DB6EF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.CloseRain.Domain", "Fiap.CloseRain.Domain\Fiap.CloseRain.Domain.csproj", "{AF16BE90-8FD1-47BA-AFF3-FEFD5755B205}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.CloseRain.Domain", "Fiap.CloseRain.Domain\Fiap.CloseRain.Domain.csproj", "{AF16BE90-8FD1-47BA-AFF3-FEFD5755B205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.CloseRain.Application", "Fiap.CloseRain.Application\Fiap.CloseRain.Application.csproj", "{B7DCAEDF-F1BE-45BA-8D13-78CD7E01BD0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.CloseRain.Application", "Fiap.CloseRain.Application\Fiap.CloseRain.Application.csproj", "{B7DCAEDF-F1BE-45BA-8D13-78CD7E01BD0F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 - Services", "05 - Services", "{8767FC77-B577-4217-957D-9FA8B59B3A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.CloseRain.Service.Twitter", "Fiap.CloseRain.Service.Twitter\Fiap.CloseRain.Service.Twitter.csproj", "{834E49AA-6822-42DA-A8E1-C0B1AD30238F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.CloseRain.Service.Twitter", "Fiap.CloseRain.Service.Twitter\Fiap.CloseRain.Service.Twitter.csproj", "{834E49AA-6822-42DA-A8E1-C0B1AD30238F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.CloseRain.Service.Correio", "Fiap.CloseRain.Service.Correio\Fiap.CloseRain.Service.Correio.csproj", "{ADD9B131-E5BE-4619-8683-4CD887D37475}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.CloseRain.Service.Correio", "Fiap.CloseRain.Service.Correio\Fiap.CloseRain.Service.Correio.csproj", "{ADD9B131-E5BE-4619-8683-4CD887D37475}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.CloseRain.Infra.IoC", "Fiap.CloseRain.Infra.IoC\Fiap.CloseRain.Infra.IoC.csproj", "{6EF2CD3B-5C7A-4B75-9191-38240E8195B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{ADD9B131-E5BE-4619-8683-4CD887D37475}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADD9B131-E5BE-4619-8683-4CD887D37475}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADD9B131-E5BE-4619-8683-4CD887D37475}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF2CD3B-5C7A-4B75-9191-38240E8195B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF2CD3B-5C7A-4B75-9191-38240E8195B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF2CD3B-5C7A-4B75-9191-38240E8195B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF2CD3B-5C7A-4B75-9191-38240E8195B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{B7DCAEDF-F1BE-45BA-8D13-78CD7E01BD0F} = {0304E21B-8104-4A2B-ADD0-145AD0B49990}
 		{834E49AA-6822-42DA-A8E1-C0B1AD30238F} = {8767FC77-B577-4217-957D-9FA8B59B3A04}
 		{ADD9B131-E5BE-4619-8683-4CD887D37475} = {8767FC77-B577-4217-957D-9FA8B59B3A04}
+		{6EF2CD3B-5C7A-4B75-9191-38240E8195B8} = {4DC0B3F7-A730-44A3-A9AF-6A25F5605B71}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE5C5F2D-C0A3-4706-AFC1-E7236905DD38}
