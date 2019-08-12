@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Fiap.CloseRain.Domain.Interfaces.Base;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Fiap.CloseRain.Domain.Interfaces.Base;
 
 namespace Fiap.CloseRain.Infra.Data.Repositories
 {

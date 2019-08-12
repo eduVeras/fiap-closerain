@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Fiap.CloseRain.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +13,22 @@ namespace Fiap.CloseRain.Controllers
     [ApiController]
     public class IncidenteController : ControllerBase
     {
-
-        
-        // GET: api/Incidente
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IIncidenteApplication _incidenteApplication;
+        public IncidenteController(IIncidenteApplication incidenteApplication)
         {
-            return new string[] { "value1", "value2" };
+            _incidenteApplication = incidenteApplication;
+        }
+        
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Get()
+        {
+            var incidentes = await _incidenteApplication.BuscarAsync();
+
+            if (!incidentes.Any())
+                return NotFound();
+
+            return Ok(incidentes);
         }
 
         // GET: api/Incidente/5

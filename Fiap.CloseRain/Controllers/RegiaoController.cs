@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Fiap.CloseRain.Domain.Entities;
+using Fiap.CloseRain.Domain.Interfaces.Application;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -11,11 +10,23 @@ namespace Fiap.CloseRain.Controllers
     [ApiController]
     public class RegiaoController : ControllerBase
     {
+        private readonly IRegiaoApplication _regiaoApplication;
+        public RegiaoController(IRegiaoApplication regiaoApplication)
+        {
+            _regiaoApplication = regiaoApplication;
+        }
+
         // GET: api/Regiao
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+
+            var regioes = await _regiaoApplication.BuscarAsync();
+
+            if (!regioes.Any())
+                return NotFound();
+
+            return Ok(regioes);
         }
 
         // GET: api/Regiao/5
@@ -27,8 +38,12 @@ namespace Fiap.CloseRain.Controllers
 
         // POST: api/Regiao
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Regiao entity)
         {
+            await _regiaoApplication.InserirAsync(entity);
+
+            return Created("path", entity.Cep);
+
         }
 
         // PUT: api/Regiao/5

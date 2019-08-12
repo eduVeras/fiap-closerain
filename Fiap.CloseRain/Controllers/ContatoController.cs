@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fiap.CloseRain.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +12,20 @@ namespace Fiap.CloseRain.Controllers
     [ApiController]
     public class ContatoController : ControllerBase
     {
-        // GET: api/Contato
+        private readonly IContatoApplication _contatoApplication;
+        public ContatoController(IContatoApplication contatoApplication)
+        {
+            _contatoApplication = contatoApplication;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return null;
+            var contatos = await _contatoApplication.BuscarAsync();
+            if (!contatos.Any())
+                return NotFound();
+
+            return Ok(contatos);
         }
 
         // GET: api/Contato/5
