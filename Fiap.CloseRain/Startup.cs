@@ -1,4 +1,6 @@
-﻿using Fiap.CloseRain.Infra.IoC;
+﻿using Fiap.CloseRain.Domain.Interfaces.Base;
+using Fiap.CloseRain.Infra.Data.Repositories;
+using Fiap.CloseRain.Infra.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +22,11 @@ namespace Fiap.CloseRain
         {
             services
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddControllersAsServices();
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDependency();
+
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

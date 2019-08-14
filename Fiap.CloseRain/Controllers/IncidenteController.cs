@@ -32,7 +32,7 @@ namespace Fiap.CloseRain.Controllers
         }
 
         // GET: api/Incidente/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetByIdIncidente")]
         public string Get(int id)
         {
             return "value";

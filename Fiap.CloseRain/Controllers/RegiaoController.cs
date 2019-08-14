@@ -30,7 +30,7 @@ namespace Fiap.CloseRain.Controllers
         }
 
         // GET: api/Regiao/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetByIdRegiao")]
         public string Get(int id)
         {
             return "value";
