@@ -2,39 +2,56 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Fiap.CloseRain.Infra.Data.Repositories
 {
     public class BaseRepository<T, TPk> : IBaseApplication<T, TPk> where T : class
     {
+        public DbContext DbContext { get; set; }
+        private readonly DbSet<T> _dbSet;
+
+        public BaseRepository()
+        {
+            _dbSet = DbContext.Set<T>();
+        }
         public async Task InserirAsync(T entity)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            await _dbSet.AddAsync(entity);
+            await SaveAsync();
         }
 
         public async Task AtualizarAsync(T entity)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            _dbSet.Update(entity);
+            await SaveAsync();
         }
 
         public async Task<IList<T>> BuscarAsync()
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<T> BuscarAsync(TPk pk)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            return await _dbSet.FindAsync(pk);
         }
 
         public async Task DeletarAsync(TPk pk)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+
+            var data = await BuscarAsync(pk);
+            if (data == null)
+                return;
+
+            _dbSet.Remove(data);
+            await SaveAsync();
+        }
+
+        private async Task<int> SaveAsync()
+        {
+            return await DbContext.SaveChangesAsync();
         }
     }
 }

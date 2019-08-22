@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Fiap.CloseRain.Domain.Interfaces.Application;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Fiap.CloseRain.Domain.Interfaces.Application;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -33,9 +30,13 @@ namespace Fiap.CloseRain.Controllers
 
         // GET: api/Incidente/5
         [HttpGet("{id}", Name = "GetByIdIncidente")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var data = _incidenteApplication.BuscarAsync(id);
+            if (data == null)
+                return NotFound();
+
+            return Ok();
         }
 
         // POST: api/Incidente

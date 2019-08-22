@@ -12,18 +12,18 @@ namespace Fiap.CloseRain.Infra.IoC
         public static void AddDependency(this IServiceCollection services)
         {
             //Application
-            //services.AddScoped(typeof(IBaseApplication<>), typeof(BaseApplication<>));
             services.AddScoped<IIncidenteApplication, IncidenteApplication>();
             services.AddScoped<IRegiaoApplication, RegiaoApplication>();
             services.AddScoped<IUsuarioApplication, UsuarioApplication>();
             services.AddScoped<IContatoApplication, ContatoApplication>();
-
+            services.AddScoped(typeof(IBaseApplication<,>), typeof(BaseApplication<,>));
 
             //Repository
-            services.AddScoped<IIncidenteRepository, IIncidenteRepository>();
+            services.AddScoped<IIncidenteRepository, IncidenteRepository>();
             services.AddScoped<IRegiaoRepository, RegiaoRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IContatoRepository, ContatoRepository>();
+            services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
         }
     }
 }
