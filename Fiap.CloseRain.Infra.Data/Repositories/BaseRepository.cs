@@ -1,8 +1,7 @@
 ﻿using Fiap.CloseRain.Domain.Interfaces.Base;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace Fiap.CloseRain.Infra.Data.Repositories

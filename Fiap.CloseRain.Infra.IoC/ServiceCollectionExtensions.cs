@@ -2,6 +2,7 @@
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Fiap.CloseRain.Domain.Interfaces.Base;
 using Fiap.CloseRain.Domain.Interfaces.Repository;
+using Fiap.CloseRain.Infra.Data.Context;
 using Fiap.CloseRain.Infra.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +25,8 @@ namespace Fiap.CloseRain.Infra.IoC
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IContatoRepository, ContatoRepository>();
             services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
+
+            
         }
     }
 }

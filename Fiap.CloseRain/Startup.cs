@@ -1,9 +1,12 @@
 ﻿using Fiap.CloseRain.Domain.Interfaces.Base;
+using Fiap.CloseRain.Extensions;
+using Fiap.CloseRain.Infra.Data.Context;
 using Fiap.CloseRain.Infra.Data.Repositories;
 using Fiap.CloseRain.Infra.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,6 +30,7 @@ namespace Fiap.CloseRain
             services.AddDependency();
 
             services.AddHealthChecks();
+            services.AddEFCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

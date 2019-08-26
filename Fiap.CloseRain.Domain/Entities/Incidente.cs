@@ -18,6 +18,7 @@ namespace Fiap.CloseRain.Domain.Entities
             DataPublicacao = null;
         }
 
+        public int IdIncidente { get; set; }
         public int IdUsuario { get; set; }
         public int IdRegiao { get; set; }
         public ETipoIncidente TipoIncidente { get; set; }

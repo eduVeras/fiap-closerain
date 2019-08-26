@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Fiap.CloseRain.Domain.Entities;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -28,33 +29,35 @@ namespace Fiap.CloseRain.Controllers
             return Ok(incidentes);
         }
 
-        // GET: api/Incidente/5
         [HttpGet("{id}", Name = "GetByIdIncidente")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(int id)
         {
-            var data = _incidenteApplication.BuscarAsync(id);
+            var data = await _incidenteApplication.BuscarAsync(id);
             if (data == null)
                 return NotFound();
 
-            return Ok();
+            return Ok(data);
         }
 
-        // POST: api/Incidente
+        
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        public async Task<IActionResult> Post([FromBody] Incidente entity)
         {
+            await _incidenteApplication.InserirAsync(entity);
+            return Created("/incidente/", entity.IdRegiao);
+
         }
 
-        // PUT: api/Incidente/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] Incidente entity)
         {
-        }
+            entity.IdIncidente = id;
+            await _incidenteApplication.AtualizarAsync(entity);
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return NoContent();
+
         }
     }
 }
