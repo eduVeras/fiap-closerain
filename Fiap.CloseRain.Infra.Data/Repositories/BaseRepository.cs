@@ -8,8 +8,8 @@ namespace Fiap.CloseRain.Infra.Data.Repositories
 {
     public class BaseRepository<T, TPk> : IBaseApplication<T, TPk> where T : class
     {
-        public DbContext DbContext { get; set; }
-        private readonly DbSet<T> _dbSet;
+        protected DbContext DbContext { get; set; }
+        protected readonly DbSet<T> _dbSet;
 
         public BaseRepository()
         {
