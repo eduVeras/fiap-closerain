@@ -1,4 +1,5 @@
-﻿using Fiap.CloseRain.Domain.Interfaces.Application;
+﻿using System.Collections.Generic;
+using Fiap.CloseRain.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Net;
@@ -43,16 +44,31 @@ namespace Fiap.CloseRain.Controllers
         
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] Incidente entity)
         {
+
+            var isValid = entity.IsValid();
+
+            if (!isValid.Valid)
+                return BadRequest(isValid.Errors);
+
             await _incidenteApplication.InserirAsync(entity);
-            return Created("/incidente/", entity.IdRegiao);
+            return Created("/incidente/", entity.IdIncidente);
 
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Put(int id, [FromBody] Incidente entity)
         {
+
+            var isValid = entity.IsValid();
+
+            if (!isValid.Valid)
+                return BadRequest(isValid.Errors);
+
             entity.IdIncidente = id;
             await _incidenteApplication.AtualizarAsync(entity);
 

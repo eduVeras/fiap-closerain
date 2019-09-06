@@ -12,27 +12,27 @@ namespace Fiap.CloseRain.Application.Applications
             _baseRepository = baseRepository;
         }
 
-        public async Task InserirAsync(T entity)
+        public virtual async Task InserirAsync(T entity)
         {
             await _baseRepository.InserirAsync(entity);
         }
 
-        public async Task AtualizarAsync(T entity)
+        public virtual async Task AtualizarAsync(T entity)
         {
             await _baseRepository.AtualizarAsync(entity);
         }
 
-        public async Task<IList<T>> BuscarAsync()
+        public virtual async Task<IList<T>> BuscarAsync()
         {
             return await _baseRepository.BuscarAsync();
         }
 
-        public async Task<T> BuscarAsync(TPk pk)
+        public virtual async Task<T> BuscarAsync(TPk pk)
         {
             return await _baseRepository.BuscarAsync(pk);
         }
 
-        public async Task DeletarAsync(TPk pk)
+        public virtual async Task DeletarAsync(TPk pk)
         {
             await _baseRepository.DeletarAsync(pk);
         }
