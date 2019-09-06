@@ -6,10 +6,10 @@ namespace Fiap.CloseRain.Extensions
 {
     public static class ServiceExtensions
     {
-
-        public static void AddEFCore(this IServiceCollection services)
+        public static IServiceCollection AddEfCore(this IServiceCollection services)
         {
-            services.AddDbContext<CloseRainContext>(opt => opt.UseSqlServer(""));
+            services.AddDbContext<CloseRainContext>(opt => opt.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CloseRainDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
+            return services;
         }
     }
 }

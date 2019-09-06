@@ -13,6 +13,8 @@
             Numero = numero;
             Descricao = descricao;
         }
+        
+        public int IdContato { get; set; }
         public string Nome { get; set; }
         public string Numero { get; set; }
         public string Descricao { get; set; }

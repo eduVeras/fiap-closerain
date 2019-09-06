@@ -2,39 +2,43 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Fiap.CloseRain.Infra.Data.Context;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace Fiap.CloseRain.Infra.Data.Repositories
 {
     public class BaseRepository<T, TPk> : IBaseApplication<T, TPk> where T : class
     {
-        protected DbContext DbContext { get; set; }
-        protected readonly DbSet<T> _dbSet;
+        private readonly CloseRainContext _dbContext; 
+        protected readonly DbSet<T> DbSet;
 
-        public BaseRepository()
+        public BaseRepository(CloseRainContext context)
         {
-            _dbSet = DbContext.Set<T>();
+            _dbContext = context;
+            DbSet = _dbContext.Set<T>();
         }
+
         public async Task InserirAsync(T entity)
         {
-            await _dbSet.AddAsync(entity);
+            await DbSet.AddAsync(entity);
             await SaveAsync();
         }
 
         public async Task AtualizarAsync(T entity)
         {
-            _dbSet.Update(entity);
+            DbSet.Update(entity);
             await SaveAsync();
         }
 
         public async Task<IList<T>> BuscarAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await DbSet.ToListAsync();
         }
 
         public async Task<T> BuscarAsync(TPk pk)
         {
-            return await _dbSet.FindAsync(pk);
+            return await DbSet.FindAsync(pk);
         }
 
         public async Task DeletarAsync(TPk pk)
@@ -44,13 +48,13 @@ namespace Fiap.CloseRain.Infra.Data.Repositories
             if (data == null)
                 return;
 
-            _dbSet.Remove(data);
+            DbSet.Remove(data);
             await SaveAsync();
         }
 
         private async Task<int> SaveAsync()
         {
-            return await DbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }

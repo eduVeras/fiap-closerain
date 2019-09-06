@@ -24,7 +24,7 @@ namespace Fiap.CloseRain
 
             services.AddDependency();
             services.AddHealthChecks();
-            services.AddEFCore();
+            services.AddEfCore();
             services.AddCors();
         }
 
