@@ -25,6 +25,7 @@ namespace Fiap.CloseRain
             services.AddDependency();
             services.AddHealthChecks();
             services.AddEFCore();
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -38,6 +39,7 @@ namespace Fiap.CloseRain
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseHealthChecks("/check");
