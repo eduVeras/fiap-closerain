@@ -34,6 +34,7 @@ namespace Fiap.CloseRain.Infra.IoC
             services.AddScoped<IContatoRepository, ContatoRepository>();
             services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
             return services;
+
         }
     }
 }
