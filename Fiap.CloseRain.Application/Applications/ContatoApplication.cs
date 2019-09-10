@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Fiap.CloseRain.Domain.Entities;
+﻿using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Fiap.CloseRain.Domain.Interfaces.Base;
 

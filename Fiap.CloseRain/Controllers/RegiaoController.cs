@@ -2,7 +2,9 @@
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Remotion.Linq.Utilities;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -16,11 +18,9 @@ namespace Fiap.CloseRain.Controllers
             _regiaoApplication = regiaoApplication;
         }
 
-        // GET: api/Regiao
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-
             var regioes = await _regiaoApplication.BuscarAsync();
 
             if (!regioes.Any())
@@ -31,31 +31,51 @@ namespace Fiap.CloseRain.Controllers
 
         // GET: api/Regiao/5
         [HttpGet("{id}", Name = "GetByIdRegiao")]
-        public string Get(int id)
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
+        [ProducesResponseType( (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            if (id.Equals(0))
+                return BadRequest("Id deve ser informado");
+
+            var result  = await _regiaoApplication.BuscarAsync(id);
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
-        // POST: api/Regiao
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] Regiao entity)
         {
+            var isValid = entity.IsValid();
+
+            if (!isValid.Valid)
+                return BadRequest(isValid.Errors);
+
             await _regiaoApplication.InserirAsync(entity);
 
-            return Created("path", entity.Cep);
+            return Created("/", entity.IdRegiao);
 
         }
 
-        // PUT: api/Regiao/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        public async Task<IActionResult> Put(int id, [FromBody] Regiao regiao)
         {
-        }
+            if (id.Equals(0))
+                return BadRequest(new {Success = false, Mensagem = "Id deve ser preehnchido"});
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            regiao.IdRegiao = id;
+
+            await _regiaoApplication.AtualizarAsync(regiao);
+
+            return NoContent();
         }
     }
 }

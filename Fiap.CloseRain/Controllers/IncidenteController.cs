@@ -20,6 +20,7 @@ namespace Fiap.CloseRain.Controllers
         
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(List<Incidente>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
             var incidentes = await _incidenteApplication.BuscarAsync();
@@ -32,6 +33,7 @@ namespace Fiap.CloseRain.Controllers
 
         [HttpGet("{id}", Name = "GetByIdIncidente")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(int id)
         {
             var data = await _incidenteApplication.BuscarAsync(id);

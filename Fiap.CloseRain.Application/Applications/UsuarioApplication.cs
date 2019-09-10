@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Fiap.CloseRain.Domain.Entities;
+﻿using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Fiap.CloseRain.Domain.Interfaces.Base;
 using Fiap.CloseRain.Domain.Interfaces.Repository;
+using System.Threading.Tasks;
 
 namespace Fiap.CloseRain.Application.Applications
 {

@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-using Fiap.CloseRain.Domain.Entities;
-using Fiap.CloseRain.Domain.Entities.Services;
+﻿using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Fiap.CloseRain.Domain.Interfaces.Base;
 using Fiap.CloseRain.Domain.Interfaces.Repository;
 using Fiap.CloseRain.Domain.Interfaces.Service;
+using System.Threading.Tasks;
 
 namespace Fiap.CloseRain.Application.Applications
 {
@@ -26,8 +25,14 @@ namespace Fiap.CloseRain.Application.Applications
         public override async Task InserirAsync(Incidente entity)
         {
             await _incidenteRepository.InserirAsync(entity);
-            var tweet = new Tweet(entity.Regiao.Latitude, entity.Regiao.Longitude);
+
+            var tweet = entity.CreateTweet();
+
             await _twitterService.TweetWithCoordinates(tweet);
+
+            entity.OnSuccessPublish();
+
+            await _incidenteRepository.AtualizarAsync(entity);
 
         }
     }
