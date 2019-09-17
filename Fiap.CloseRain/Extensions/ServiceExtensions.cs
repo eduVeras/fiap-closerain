@@ -15,7 +15,11 @@ namespace Fiap.CloseRain.Extensions
     {
         public static IServiceCollection AddEfCore(this IServiceCollection services)
         {
-            services.AddDbContext<CloseRainContext>(opt => opt.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CloseRainDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
+            //services.AddDbContext<CloseRainContext>(opt =>
+            //    opt.UseSqlServer(
+            //        "Server=(localdb)\\mssqllocaldb;Database=CloseRainDb;Trusted_Connection=True;MultipleActiveResultSets=true")).AddEntityFrameworkInMemoryDatabase();
+
+            services.AddDbContext<CloseRainContext>(e => e.UseInMemoryDatabase("CloseRainDb"));
             return services;
         }
 
