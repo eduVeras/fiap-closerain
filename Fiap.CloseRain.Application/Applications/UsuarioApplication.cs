@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Fiap.CloseRain.Application.Applications
 {
-    public class UsuarioApplication : BaseApplication<Usuario, int>, IUsuarioApplication
+    public class UsuarioApplication : BaseApplication<Usuario>, IUsuarioApplication
     {
         private readonly IUsuarioRepository _usuarioRepository;
-        public UsuarioApplication(IBaseRepository<Usuario, int> baseRepository, IUsuarioRepository usuarioRepository) : base(baseRepository)
+        public UsuarioApplication( IUsuarioRepository usuarioRepository) : base(usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
         }

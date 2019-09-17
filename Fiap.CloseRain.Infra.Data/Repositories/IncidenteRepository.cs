@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.CloseRain.Infra.Data.Repositories
 {
-    public class IncidenteRepository : BaseRepository<Incidente, int>, IIncidenteRepository
+    public class IncidenteRepository : BaseRepository<Incidente>, IIncidenteRepository
     {
         public IncidenteRepository(CloseRainContext context) : base(context)
         {

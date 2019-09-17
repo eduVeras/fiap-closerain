@@ -4,7 +4,7 @@ using Fiap.CloseRain.Domain.Interfaces.Base;
 
 namespace Fiap.CloseRain.Domain.Interfaces.Application
 {
-    public interface IUsuarioApplication : IBaseApplication<Usuario, int>
+    public interface IUsuarioApplication : IBaseApplication<Usuario>
     {
         Task<bool> Autenticar(Usuario usuario);
     }

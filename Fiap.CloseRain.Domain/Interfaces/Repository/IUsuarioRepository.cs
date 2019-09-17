@@ -4,7 +4,7 @@ using Fiap.CloseRain.Domain.Interfaces.Base;
 
 namespace Fiap.CloseRain.Domain.Interfaces.Repository
 {
-    public interface IUsuarioRepository : IBaseRepository<Usuario, int>
+    public interface IUsuarioRepository : IBaseRepository<Usuario>
     {
         Task<bool> Autenticar(Usuario usuario);
     }

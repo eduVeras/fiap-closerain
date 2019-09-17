@@ -1,6 +1,5 @@
 ﻿using Fiap.CloseRain.Application.Applications;
 using Fiap.CloseRain.Domain.Interfaces.Application;
-using Fiap.CloseRain.Domain.Interfaces.Base;
 using Fiap.CloseRain.Domain.Interfaces.Repository;
 using Fiap.CloseRain.Domain.Interfaces.Service;
 using Fiap.CloseRain.Infra.Data.Repositories;
@@ -25,7 +24,8 @@ namespace Fiap.CloseRain.Infra.IoC
             services.AddScoped<IRegiaoApplication, RegiaoApplication>();
             services.AddScoped<IUsuarioApplication, UsuarioApplication>();
             services.AddScoped<IContatoApplication, ContatoApplication>();
-            services.AddScoped(typeof(IBaseApplication<,>), typeof(BaseApplication<,>));
+
+            //services.AddScoped(typeof(IBaseApplication<>), typeof(BaseApplication<>));
             return services;
         }
 
@@ -35,7 +35,7 @@ namespace Fiap.CloseRain.Infra.IoC
             services.AddScoped<IRegiaoRepository, RegiaoRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IContatoRepository, ContatoRepository>();
-            services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
+            //services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             return services;
 
         }

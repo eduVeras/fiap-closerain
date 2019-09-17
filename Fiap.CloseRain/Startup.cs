@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+using Microsoft.Extensions.PlatformAbstractions;
+using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
-using System.Reflection;
 
 namespace Fiap.CloseRain
 {
@@ -31,9 +31,27 @@ namespace Fiap.CloseRain
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments($"D:\\Desenv\\fiap-closerain\\Fiap.CloseRain\\{xmlFile}");
+                c.SwaggerDoc("v1",
+                    new Info
+                    {
+                        Title = "Fiap - Close Rain",
+                        Version = "v1",
+                        Description = "Serviços referentes ao projeto Close Rain",
+                        Contact = new Contact
+                        {
+                            Name = "Grupo",
+                            Url = "https://github.com/eduveras/fiap-closerain"
+                        }
+                    });
+
+                string caminhoAplicacao =
+                    PlatformServices.Default.Application.ApplicationBasePath;
+                string nomeAplicacao =
+                    PlatformServices.Default.Application.ApplicationName;
+                string caminhoXmlDoc =
+                    Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
+
+                c.IncludeXmlComments(caminhoXmlDoc);
             });
         }
 
@@ -44,20 +62,21 @@ namespace Fiap.CloseRain
                 app.UseDeveloperExceptionPage();
             }
             else
-            {
+            {   
                 app.UseHsts();
             }
 
             app.UseCors();
             app.UseHttpsRedirection();
-            app.UseSwagger();
+            
+            app.UseMvc();
 
+            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = "swagger";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                    "Conversor de Temperaturas");
             });
-            app.UseMvc();
             app.UseHealthChecks("/check");
         }
     }

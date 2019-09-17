@@ -1,12 +1,13 @@
 ﻿using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Fiap.CloseRain.Domain.Interfaces.Base;
+using Fiap.CloseRain.Domain.Interfaces.Repository;
 
 namespace Fiap.CloseRain.Application.Applications
 {
-    public class RegiaoApplication : BaseApplication<Regiao,int>, IRegiaoApplication
+    public class RegiaoApplication : BaseApplication<Regiao>, IRegiaoApplication
     {
-        public RegiaoApplication(IBaseRepository<Regiao, int> baseRepository) : base(baseRepository)
+        public RegiaoApplication(IRegiaoRepository regiaoRepository) : base(regiaoRepository)
         {
         }
     }

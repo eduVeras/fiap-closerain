@@ -3,7 +3,7 @@ using Fiap.CloseRain.Domain.Interfaces.Base;
 
 namespace Fiap.CloseRain.Domain.Interfaces.Application
 {
-    public interface IRegiaoApplication : IBaseApplication<Regiao, int>
+    public interface IRegiaoApplication : IBaseApplication<Regiao>
     {
 
     }

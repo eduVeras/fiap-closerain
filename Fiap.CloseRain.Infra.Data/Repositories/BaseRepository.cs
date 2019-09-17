@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Fiap.CloseRain.Infra.Data.Repositories
 {
-    public class BaseRepository<T, TPk> : IBaseApplication<T, TPk> where T : class
+    public class BaseRepository<T> : IBaseApplication<T> where T : class
     {
         private readonly CloseRainContext _dbContext; 
         protected readonly DbSet<T> DbSet;
@@ -36,12 +36,12 @@ namespace Fiap.CloseRain.Infra.Data.Repositories
             return await DbSet.ToListAsync();
         }
 
-        public async Task<T> BuscarAsync(TPk pk)
+        public async Task<T> BuscarAsync(int pk)
         {
             return await DbSet.FindAsync(pk);
         }
 
-        public async Task DeletarAsync(TPk pk)
+        public async Task DeletarAsync(int pk)
         {
 
             var data = await BuscarAsync(pk);

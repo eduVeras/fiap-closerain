@@ -4,7 +4,7 @@ using Fiap.CloseRain.Infra.Data.Context;
 
 namespace Fiap.CloseRain.Infra.Data.Repositories
 {
-    public class ContatoRepository : BaseRepository<Contato, int>, IContatoRepository
+    public class ContatoRepository : BaseRepository<Contato>, IContatoRepository
     {
         public ContatoRepository(CloseRainContext context) : base(context)
         {

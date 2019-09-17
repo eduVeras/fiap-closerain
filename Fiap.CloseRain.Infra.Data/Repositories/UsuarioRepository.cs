@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.CloseRain.Infra.Data.Repositories
 {
-    public class UsuarioRepository : BaseRepository<Usuario, int>, IUsuarioRepository
+    public class UsuarioRepository : BaseRepository<Usuario>, IUsuarioRepository
     {
 
         public UsuarioRepository(CloseRainContext context) : base(context)

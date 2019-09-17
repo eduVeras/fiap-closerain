@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace Fiap.CloseRain.Application.Applications
 {
-    public class IncidenteApplication : BaseApplication<Incidente,int>, IIncidenteApplication
+    public class IncidenteApplication : BaseApplication<Incidente>, IIncidenteApplication
     {
 
         private readonly ITwitterService _twitterService;
         private readonly IIncidenteRepository _incidenteRepository;
-        public IncidenteApplication(IBaseRepository<Incidente, int> baseRepository,
-            ITwitterService twitterService,
+        public IncidenteApplication(ITwitterService twitterService,
             IIncidenteRepository incidenteRepository) 
-            : base(baseRepository)
+            : base(incidenteRepository)
         {
             _twitterService = twitterService;
             _incidenteRepository = incidenteRepository;

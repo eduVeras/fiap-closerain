@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 namespace Fiap.CloseRain.Application.Applications
 {
-    public class BaseApplication<T, TPk> : IBaseApplication<T, TPk> where T : class 
+    public class BaseApplication<T> : IBaseApplication<T> where T : class 
     {
-        private readonly IBaseRepository<T, TPk> _baseRepository;
-        public BaseApplication(IBaseRepository<T, TPk> baseRepository)
+        private readonly IBaseRepository<T> _baseRepository;
+        public BaseApplication(IBaseRepository<T> baseRepository)
         {
             _baseRepository = baseRepository;
         }
@@ -27,12 +27,12 @@ namespace Fiap.CloseRain.Application.Applications
             return await _baseRepository.BuscarAsync();
         }
 
-        public virtual async Task<T> BuscarAsync(TPk pk)
+        public virtual async Task<T> BuscarAsync(int pk)
         {
             return await _baseRepository.BuscarAsync(pk);
         }
 
-        public virtual async Task DeletarAsync(TPk pk)
+        public virtual async Task DeletarAsync(int pk)
         {
             await _baseRepository.DeletarAsync(pk);
         }
