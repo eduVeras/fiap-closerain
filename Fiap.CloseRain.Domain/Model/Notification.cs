@@ -9,9 +9,9 @@ namespace Fiap.CloseRain.Domain.Model
 
         public Notification(T data)
         {
+            Errors = new Dictionary<string, string>();
             Valid = !HasErrors();
             Data = data;
-            Errors = new Dictionary<string, string>();
         }
 
         public bool Valid { get; set; }

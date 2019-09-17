@@ -78,6 +78,8 @@ namespace Fiap.CloseRain
                     "Conversor de Temperaturas");
             });
             app.UseHealthChecks("/check");
+
+            app.ExceptionHandler();
         }
     }
 }

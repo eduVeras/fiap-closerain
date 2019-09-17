@@ -56,7 +56,7 @@ namespace Fiap.CloseRain.Controllers
                 return BadRequest(isValid.Errors);
 
             await _incidenteApplication.InserirAsync(entity);
-            return Created("/incidente/", entity.IdIncidente);
+            return Created("GetByIdIncidente", entity.IdIncidente);
 
         }
 
