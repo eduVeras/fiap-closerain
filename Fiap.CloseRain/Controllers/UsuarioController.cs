@@ -17,6 +17,11 @@ namespace Fiap.CloseRain.Controllers
             _usuarioApplication = usuarioApplication;
         }
 
+        /// <summary>
+        /// Serviço utilizado para autenticação do usuario no aplicativo.
+        /// </summary>
+        /// <param name="entity">Credencias do usuario que está tentando se logar.</param>
+        /// <returns>Este serviço ira retornar o StatusCode 200 caso o usuario seja autentico, do contrario irá retornar 401. </returns>
         [HttpPost, Route("Autenticar")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
@@ -36,6 +41,11 @@ namespace Fiap.CloseRain.Controllers
             return Unauthorized();
         }
 
+        /// <summary>
+        /// Serviço utilizado para cadastrar novos usuarios que desejam utilizar o aplicativo.
+        /// </summary>
+        /// <param name="entity">Informações do usuario que está se cadastrando</param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Usuario), (int)HttpStatusCode.Created)]

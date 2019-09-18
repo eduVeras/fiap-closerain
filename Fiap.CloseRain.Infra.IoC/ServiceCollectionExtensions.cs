@@ -3,6 +3,7 @@ using Fiap.CloseRain.Domain.Interfaces.Application;
 using Fiap.CloseRain.Domain.Interfaces.Repository;
 using Fiap.CloseRain.Domain.Interfaces.Service;
 using Fiap.CloseRain.Infra.Data.Repositories;
+using Fiap.CloseRain.Service.Correio.Services;
 using Fiap.CloseRain.Service.Twitter.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -43,6 +44,12 @@ namespace Fiap.CloseRain.Infra.IoC
         private static IServiceCollection RegisterTwitter(this IServiceCollection services)
         {
             services.AddScoped<ITwitterService, TwitterService>();
+            return services;
+        }
+
+        private static IServiceCollection RegisterCorreio(this IServiceCollection services)
+        {
+            services.AddScoped<ICorreioService, ViaCepService>();
             return services;
         }
     }

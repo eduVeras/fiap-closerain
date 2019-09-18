@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 
@@ -28,7 +24,7 @@ namespace Fiap.CloseRain.Extensions
                         {
                             StatusCode = 500,
                             ErrorMessage = ex.Message
-                        }.ToString()); //ToString() is overridden to Serialize object
+                        }.ToString()); 
                     }
                 });
             });

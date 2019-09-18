@@ -60,5 +60,7 @@ namespace Fiap.CloseRain.Service.Twitter.Services
                 throw;
             }
         }
+
+        
     }
 }

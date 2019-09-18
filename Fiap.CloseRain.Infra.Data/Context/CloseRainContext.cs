@@ -1,6 +1,5 @@
 ﻿using Fiap.CloseRain.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Fiap.CloseRain.Infra.Data.Context
 {
@@ -15,7 +14,7 @@ namespace Fiap.CloseRain.Infra.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Write Fluent API configurations here
-
+            
             //Property Configurations
             modelBuilder.Entity<Contato>().HasKey(e => e.IdContato);
             modelBuilder.Entity<Incidente>().HasKey(e => e.IdIncidente);
