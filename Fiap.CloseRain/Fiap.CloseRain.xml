@@ -4,5 +4,19 @@
         <name>Fiap.CloseRain</name>
     </assembly>
     <members>
+        <member name="M:Fiap.CloseRain.Controllers.UsuarioController.Autenticar(Fiap.CloseRain.Domain.Entities.Usuario)">
+            <summary>
+            Serviço utilizado para autenticação do usuario no aplicativo.
+            </summary>
+            <param name="entity">Credencias do usuario que está tentando se logar.</param>
+            <returns>Este serviço ira retornar o StatusCode 200 caso o usuario seja autentico, do contrario irá retornar 401. </returns>
+        </member>
+        <member name="M:Fiap.CloseRain.Controllers.UsuarioController.Post(Fiap.CloseRain.Domain.Entities.Usuario)">
+            <summary>
+            Serviço utilizado para cadastrar novos usuarios que desejam utilizar o aplicativo.
+            </summary>
+            <param name="entity">Informações do usuario que está se cadastrando</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
