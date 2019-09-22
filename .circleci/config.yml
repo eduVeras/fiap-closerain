@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: microsoft/aspnetcore-build:2.0
+      - image: microsoft/aspnetcore-build:2.2
     steps:
       - checkout
       - run: find .
