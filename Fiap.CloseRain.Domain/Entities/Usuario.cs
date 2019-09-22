@@ -137,7 +137,11 @@ namespace Fiap.CloseRain.Domain.Entities
 
         public bool BeOver18(DateTime nascimento)
         {
-            return nascimento.AddYears(18) > DateTime.Now;
+
+            TimeSpan a = DateTime.Now.Subtract(nascimento);
+
+            var result = nascimento.AddYears(18) > DateTime.Now;
+            return nascimento.AddYears(18) < DateTime.Now;
         }
 
     }

@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fiap.CloseRain.Domain\Fiap.CloseRain.Domain.csproj" />
-    <ProjectReference Include="..\Fiap.CloseRain.Infra.Data\Fiap.CloseRain.Infra.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

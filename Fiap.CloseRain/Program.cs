@@ -13,6 +13,7 @@ namespace Fiap.CloseRain
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseIIS()
+                .UseIISIntegration()
                 .UseStartup<Startup>();
     }
 }

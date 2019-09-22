@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Fiap.CloseRain.Domain.Interfaces.Application;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Fiap.CloseRain.Domain.Interfaces.Application;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Fiap.CloseRain.Domain.Entities;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -21,6 +20,7 @@ namespace Fiap.CloseRain.Controllers
         
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(List<Incidente>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
             var incidentes = await _incidenteApplication.BuscarAsync();
@@ -31,29 +31,51 @@ namespace Fiap.CloseRain.Controllers
             return Ok(incidentes);
         }
 
-        // GET: api/Incidente/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetByIdIncidente")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var data = await _incidenteApplication.BuscarAsync(id);
+            if (data == null)
+                return NotFound();
+
+            return Ok(data);
         }
 
-        // POST: api/Incidente
+        
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Post([FromBody] Incidente entity)
         {
+
+            var isValid = entity.IsValid();
+
+            if (!isValid.Valid)
+                return BadRequest(isValid.Errors);
+
+            await _incidenteApplication.InserirAsync(entity);
+            return Created("GetByIdIncidente", entity.IdIncidente);
+
         }
 
-        // PUT: api/Incidente/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Put(int id, [FromBody] Incidente entity)
         {
-        }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var isValid = entity.IsValid();
+
+            if (!isValid.Valid)
+                return BadRequest(isValid.Errors);
+
+            entity.IdIncidente = id;
+            await _incidenteApplication.AtualizarAsync(entity);
+
+            return NoContent();
+
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Fiap.CloseRain.Domain.Interfaces.Application;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using Fiap.CloseRain.Domain.Entities;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -19,6 +19,9 @@ namespace Fiap.CloseRain.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(List<Contato>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
             var contatos = await _contatoApplication.BuscarAsync();
@@ -28,29 +31,48 @@ namespace Fiap.CloseRain.Controllers
             return Ok(contatos);
         }
 
-        // GET: api/Contato/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetByIdContato")]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Contato),(int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            if (id.Equals(0))
+                return BadRequest("Id deve ser informado");
+
+            var result = await _contatoApplication.BuscarAsync(id);
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
-        // POST: api/Contato
+        
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Contato), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> Post([FromBody] Contato entity)
         {
+            await _contatoApplication.InserirAsync(entity);
+            return Created("/", entity.IdContato);
         }
 
-        // PUT: api/Contato/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Contato), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> Put(int id, [FromBody] Contato entity)
         {
-        }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (id.Equals(0))
+                return BadRequest("Id deve ser informado");
+
+            entity.IdContato = id;
+
+            await _contatoApplication.AtualizarAsync(entity);
+
+            return NoContent();
         }
     }
 }

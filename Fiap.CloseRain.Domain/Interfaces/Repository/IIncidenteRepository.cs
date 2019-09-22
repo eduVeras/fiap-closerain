@@ -5,7 +5,7 @@ using Fiap.CloseRain.Domain.Interfaces.Base;
 
 namespace Fiap.CloseRain.Domain.Interfaces.Repository
 {
-    public interface IIncidenteRepository : IBaseRepository<Incidente, int>
+    public interface IIncidenteRepository : IBaseRepository<Incidente>
     {
         Task<IEnumerable<Incidente>> BuscarPorRegiaoAsync(double latitude, double longitude);
         Task<IEnumerable<Incidente>> BuscarPorUsuarioAsync(int idUsuario);

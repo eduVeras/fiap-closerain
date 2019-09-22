@@ -1,9 +1,13 @@
-﻿using Fiap.CloseRain.Infra.IoC;
+﻿using Fiap.CloseRain.Extensions;
+using Fiap.CloseRain.Infra.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
+using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
 
 namespace Fiap.CloseRain
 {
@@ -15,18 +19,42 @@ namespace Fiap.CloseRain
         }
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddControllersAsServices();
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDependency();
+            services.AddHealthChecks();
+            services.AddEfCore();
+            services.AddCors();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new Info
+                    {
+                        Title = "Fiap - Close Rain",
+                        Version = "v1",
+                        Description = "Serviços referentes ao projeto Close Rain",
+                        Contact = new Contact
+                        {
+                            Name = "Grupo",
+                            Url = "https://github.com/eduveras/fiap-closerain"
+                        }
+                    });
+
+                string caminhoAplicacao =
+                    PlatformServices.Default.Application.ApplicationBasePath;
+                string nomeAplicacao =
+                    PlatformServices.Default.Application.ApplicationName;
+                string caminhoXmlDoc =
+                    Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
+
+                c.IncludeXmlComments(caminhoXmlDoc);
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -34,14 +62,24 @@ namespace Fiap.CloseRain
                 app.UseDeveloperExceptionPage();
             }
             else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            {   
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
+            
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                    "Conversor de Temperaturas");
+            });
             app.UseHealthChecks("/check");
+
+            app.ExceptionHandler();
         }
     }
 }

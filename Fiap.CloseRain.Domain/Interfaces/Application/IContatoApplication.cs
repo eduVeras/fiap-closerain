@@ -3,7 +3,7 @@ using Fiap.CloseRain.Domain.Interfaces.Base;
 
 namespace Fiap.CloseRain.Domain.Interfaces.Application
 {
-    public interface IContatoApplication : IBaseApplication<Contato, int>
+    public interface IContatoApplication : IBaseApplication<Contato>
     {
         
     }
