@@ -5,6 +5,8 @@ orbs:
 
 jobs:
   build:
+  docker:
+      - image: microsoft/dotnet:2.2-sdk	      
     steps:
       - checkout
       - run: find .
