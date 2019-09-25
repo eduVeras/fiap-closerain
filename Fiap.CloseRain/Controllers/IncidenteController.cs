@@ -17,7 +17,7 @@ namespace Fiap.CloseRain.Controllers
         {
             _incidenteApplication = incidenteApplication;
         }
-        
+
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(List<Incidente>), (int)HttpStatusCode.OK)]
@@ -43,7 +43,31 @@ namespace Fiap.CloseRain.Controllers
             return Ok(data);
         }
 
-        
+        [HttpGet("{idUsuario}", Name = "GetByIdUsuario")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetByUsuario(int idUsuario)
+        {
+            var data = await _incidenteApplication.BuscarPorUsuarioAsync(idUsuario);
+            if (data == null)
+                return NotFound();
+
+            return Ok(data);
+        }
+
+        [HttpGet("{qtdRegistro}", Name = "GetLatest")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetLatest(int qtdRegistro)
+        {
+            var data = await _incidenteApplication.BuscarUltimosAsync(qtdRegistro);
+            if (data == null)
+                return NotFound();
+
+            return Ok(data);
+        }
+
+
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
@@ -75,7 +99,6 @@ namespace Fiap.CloseRain.Controllers
             await _incidenteApplication.AtualizarAsync(entity);
 
             return NoContent();
-
         }
     }
 }

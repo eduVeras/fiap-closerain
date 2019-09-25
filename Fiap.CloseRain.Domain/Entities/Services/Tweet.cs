@@ -28,8 +28,6 @@
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-
-
         private string TwitterMessage => "A região encontra-se alagada, tome cuidado!";
 
         public void SetMessage(string message)

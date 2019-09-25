@@ -1,8 +1,8 @@
 ﻿using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
-using Fiap.CloseRain.Domain.Interfaces.Base;
 using Fiap.CloseRain.Domain.Interfaces.Repository;
 using Fiap.CloseRain.Domain.Interfaces.Service;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Fiap.CloseRain.Application.Applications
@@ -20,12 +20,21 @@ namespace Fiap.CloseRain.Application.Applications
             _incidenteRepository = incidenteRepository;
         }
 
+        public async Task<IEnumerable<Incidente>> BuscarPorUsuarioAsync(int idUsuario)
+        {
+            return await _incidenteRepository.BuscarPorUsuarioAsync(idUsuario);
+        }
+
+        public async Task<IEnumerable<Incidente>> BuscarUltimosAsync(int qtdUltimosIncidentes)
+        {
+            return await _incidenteRepository.BuscarUltimosAsync(qtdUltimosIncidentes);
+        }
 
         public override async Task InserirAsync(Incidente entity)
         {
             await _incidenteRepository.InserirAsync(entity);
 
-            var tweet = entity.CreateTweet();
+            var tweet = entity.CreateTweet();            
 
             await _twitterService.TweetWithCoordinates(tweet);
 

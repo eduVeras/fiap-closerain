@@ -58,7 +58,7 @@ namespace Fiap.CloseRain.Domain.Entities
 
         public Tweet CreateTweet()
         {
-            return new Tweet(Regiao.Latitude,Regiao.Longitude);
+            return new Tweet($"A região encontra-se alagada, tome cuidado! {Regiao.GetPolicyByState()}", Regiao.Latitude, Regiao.Longitude);
         }
 
         /*

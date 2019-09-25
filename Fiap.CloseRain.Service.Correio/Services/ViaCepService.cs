@@ -25,7 +25,7 @@ namespace Fiap.CloseRain.Service.Correio.Services
             if(data == null)
                 throw new Exception($"Erro ao requisitar CEP - {cep}");
 
-            return new Regiao(0,cep, data.logradouro,data.bairro,data.localidade,data.uf,"BR",0,0);
+            return new Regiao(0, cep, data.logradouro, data.bairro, data.localidade, data.uf, 0, 0);
         }
     }
 }
