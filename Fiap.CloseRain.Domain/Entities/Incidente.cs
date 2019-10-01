@@ -60,11 +60,5 @@ namespace Fiap.CloseRain.Domain.Entities
         {
             return new Tweet($"A região encontra-se alagada, tome cuidado! {Regiao.GetPolicyByState()}", Regiao.Latitude, Regiao.Longitude);
         }
-
-        /*
-         * SELECT * 
-         *  FROM Incidente 
-         *  WHERE acos(sin(radians(-23.5919651)) * sin(Lat) + cos(1.3963) * cos(Lat) * cos(Lon - (radians(-46.6910617)))) * 6371 <= 5;
-         */
     }
 }

@@ -29,7 +29,6 @@ namespace Fiap.CloseRain.Controllers
             return Ok(regioes);
         }
 
-        // GET: api/Regiao/5
         [HttpGet("{id}", Name = "GetByIdRegiao")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]

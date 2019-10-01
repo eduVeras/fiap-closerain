@@ -17,7 +17,9 @@ namespace Fiap.CloseRain.Infra.Data.Context
             
             //Property Configurations
             modelBuilder.Entity<Contato>().HasKey(e => e.IdContato);
-            modelBuilder.Entity<Incidente>().HasKey(e => e.IdIncidente);
+            var incidente = modelBuilder.Entity<Incidente>();
+            
+            incidente.HasKey(e => e.IdIncidente);
             modelBuilder.Entity<Regiao>().HasKey(e => e.IdRegiao);
             modelBuilder.Entity<Usuario>().HasKey(e => e.IdUsuario);
 

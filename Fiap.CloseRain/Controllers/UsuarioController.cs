@@ -1,5 +1,6 @@
 ﻿using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
+using Fiap.CloseRain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Net;
@@ -20,14 +21,16 @@ namespace Fiap.CloseRain.Controllers
         /// <summary>
         /// Serviço utilizado para autenticação do usuario no aplicativo.
         /// </summary>
-        /// <param name="entity">Credencias do usuario que está tentando se logar.</param>
+        /// <param name="vm">Credencias do usuario que está tentando se logar.</param>
         /// <returns>Este serviço ira retornar o StatusCode 200 caso o usuario seja autentico, do contrario irá retornar 401. </returns>
         [HttpPost, Route("Autenticar")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Autenticar([FromBody] Usuario entity)
+        public async Task<IActionResult> Autenticar([FromBody] UsuarioViewModel vm)
         {
+            var entity = vm.Parse();
+
             var isValid = entity.IsValid();
 
             if (!isValid.Valid)
@@ -44,13 +47,15 @@ namespace Fiap.CloseRain.Controllers
         /// <summary>
         /// Serviço utilizado para cadastrar novos usuarios que desejam utilizar o aplicativo.
         /// </summary>
-        /// <param name="entity">Informações do usuario que está se cadastrando</param>
+        /// <param name="vm">Informações do usuario que está se cadastrando</param>
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Usuario), (int)HttpStatusCode.Created)]
-        public async Task<IActionResult> Post([FromBody] Usuario entity)
+        public async Task<IActionResult> Post([FromBody] UsuarioViewModel vm)
         {
+
+            var entity = vm.Parse();
             var isValid = entity.IsValid();
 
             if (!isValid.Valid)
@@ -61,7 +66,7 @@ namespace Fiap.CloseRain.Controllers
             return Created("/", entity.IdUsuario);
         }
 
-        [HttpGet,Route("{id}")]
+        [HttpGet, Route("{id}")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(List<Usuario>), (int)HttpStatusCode.OK)]
@@ -81,10 +86,14 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<IActionResult> Put(int id, [FromBody] Usuario entity)
+        public async Task<IActionResult> Put(int id, [FromBody] UsuarioViewModel vm)
         {
+
+
             if (id.Equals(0))
                 return BadRequest(new { Success = false, Mensagem = "Id deve ser preehnchido" });
+
+            var entity = vm.Parse();
 
             entity.IdUsuario = id;
 

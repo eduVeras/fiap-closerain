@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Fiap.CloseRain.Domain.Entities;
+using Fiap.CloseRain.Models;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -71,8 +72,9 @@ namespace Fiap.CloseRain.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Post([FromBody] Incidente entity)
+        public async Task<IActionResult> Post([FromBody] IncidenteViewModel vm)
         {
+            var entity = vm.Parse();
 
             var isValid = entity.IsValid();
 
@@ -87,8 +89,10 @@ namespace Fiap.CloseRain.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Put(int id, [FromBody] Incidente entity)
+        public async Task<IActionResult> Put(int id, [FromBody] IncidenteViewModel vm)
         {
+
+            var entity = vm.Parse();
 
             var isValid = entity.IsValid();
 
