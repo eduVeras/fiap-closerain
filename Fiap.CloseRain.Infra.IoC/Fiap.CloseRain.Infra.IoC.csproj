@@ -8,7 +8,6 @@
     <ProjectReference Include="..\Fiap.CloseRain.Application\Fiap.CloseRain.Application.csproj" />
     <ProjectReference Include="..\Fiap.CloseRain.Domain\Fiap.CloseRain.Domain.csproj" />
     <ProjectReference Include="..\Fiap.CloseRain.Infra.Data\Fiap.CloseRain.Infra.Data.csproj" />
-    <ProjectReference Include="..\Fiap.CloseRain.Service.Correio\Fiap.CloseRain.Service.Correio.csproj" />
     <ProjectReference Include="..\Fiap.CloseRain.Service.Twitter\Fiap.CloseRain.Service.Twitter.csproj" />
   </ItemGroup>
 

@@ -66,6 +66,11 @@ namespace Fiap.CloseRain.Controllers
             return Created("/", entity.IdUsuario);
         }
 
+        /// <summary>
+        /// Serviço utilizado para buscar um usuario especifico.
+        /// </summary>
+        /// <param name="id">Referencia do usuario que deseja ser localizado.</param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -82,6 +87,12 @@ namespace Fiap.CloseRain.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Serviço responsavel pela atualização de dados cadastrais do usuario.
+        /// </summary>
+        /// <param name="id">Chave de referencia do usuario.</param>
+        /// <param name="vm">Novo conteudo a ser atualizado.</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]

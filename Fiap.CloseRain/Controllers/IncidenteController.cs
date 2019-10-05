@@ -19,6 +19,10 @@ namespace Fiap.CloseRain.Controllers
             _incidenteApplication = incidenteApplication;
         }
 
+        /// <summary>
+        /// Busca todos os incidentes cadastrados.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(List<Incidente>), (int)HttpStatusCode.OK)]
@@ -32,6 +36,11 @@ namespace Fiap.CloseRain.Controllers
             return Ok(incidentes);
         }
 
+        /// <summary>
+        /// Busca um incidente especifico pela sua referencia.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetByIdIncidente")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
@@ -44,6 +53,11 @@ namespace Fiap.CloseRain.Controllers
             return Ok(data);
         }
 
+        /// <summary>
+        /// Realiza a busca de todos incidentes a partir de um usuario.
+        /// </summary>
+        /// <param name="idUsuario">Id de referencia do usuario.</param>
+        /// <returns></returns>
         [HttpGet("{idUsuario}", Name = "GetByIdUsuario")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
@@ -56,6 +70,11 @@ namespace Fiap.CloseRain.Controllers
             return Ok(data);
         }
 
+        /// <summary>
+        /// Busca os ultimos incidentes cadastrados.
+        /// </summary>
+        /// <param name="qtdRegistro"></param>
+        /// <returns></returns>
         [HttpGet("{qtdRegistro}", Name = "GetLatest")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
@@ -69,6 +88,11 @@ namespace Fiap.CloseRain.Controllers
         }
 
 
+        /// <summary>
+        /// Serviço utilizado para o cadastro de um novo incidente, será informado o local do incidente, e o usuario que está notificando.
+        /// </summary>
+        /// <param name="vm">Conteudo do incidente</param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
@@ -86,6 +110,12 @@ namespace Fiap.CloseRain.Controllers
 
         }
 
+        /// <summary>
+        /// Serviço responsavel pela atualização dos dados de um incidente.
+        /// </summary>
+        /// <param name="id">Referencia do incididente</param>
+        /// <param name="vm">Novo conteudo</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
