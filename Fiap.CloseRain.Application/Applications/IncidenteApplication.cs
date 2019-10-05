@@ -12,12 +12,14 @@ namespace Fiap.CloseRain.Application.Applications
 
         private readonly ITwitterService _twitterService;
         private readonly IIncidenteRepository _incidenteRepository;
+        private readonly ITweetedsRepository _tweetedsRepository;
         public IncidenteApplication(ITwitterService twitterService,
-            IIncidenteRepository incidenteRepository) 
+            IIncidenteRepository incidenteRepository, ITweetedsRepository tweetedsRepository)
             : base(incidenteRepository)
         {
             _twitterService = twitterService;
             _incidenteRepository = incidenteRepository;
+            _tweetedsRepository = tweetedsRepository;
         }
 
         public async Task<IEnumerable<Incidente>> BuscarPorUsuarioAsync(int idUsuario)
@@ -34,13 +36,15 @@ namespace Fiap.CloseRain.Application.Applications
         {
             await _incidenteRepository.InserirAsync(entity);
 
-            var tweet = entity.CreateTweet();            
+            var tweet = entity.CreateTweet();
 
             await _twitterService.TweetWithCoordinates(tweet);
 
             entity.OnSuccessPublish();
 
             await _incidenteRepository.AtualizarAsync(entity);
+
+            await _tweetedsRepository.InserirAsync(new Tweeteds(entity.IdIncidente, tweet.Message));
 
         }
     }

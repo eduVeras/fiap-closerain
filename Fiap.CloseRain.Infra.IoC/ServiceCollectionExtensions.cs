@@ -31,6 +31,7 @@ namespace Fiap.CloseRain.Infra.IoC
             services.AddScoped<IIncidenteRepository, IncidenteRepository>();
             services.AddScoped<IRegiaoRepository, RegiaoRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ITweetedsRepository, TweetedsRepository>();
             return services;
 
         }

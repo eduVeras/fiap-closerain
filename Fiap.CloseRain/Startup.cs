@@ -52,7 +52,7 @@ namespace Fiap.CloseRain
                 string caminhoXmlDoc =
                     Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
 
-                c.IncludeXmlComments(caminhoXmlDoc);
+                //c.IncludeXmlComments(caminhoXmlDoc);
             });
         }
 
@@ -71,7 +71,6 @@ namespace Fiap.CloseRain
             app.UseCors();
             app.UseHttpsRedirection();
             
-            app.UseMvc();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -82,6 +81,9 @@ namespace Fiap.CloseRain
             app.UseHealthChecks("/check");
 
             app.ExceptionHandler();
+
+            app.UseMvc();
+
         }
     }
 }

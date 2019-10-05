@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -28,12 +29,20 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType(typeof(List<Incidente>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
-            var incidentes = await _incidenteApplication.BuscarAsync();
+            try
+            {
+                var incidentes = await _incidenteApplication.BuscarAsync();
 
-            if (!incidentes.Any())
-                return NotFound();
+                if (!incidentes.Any())
+                    return NotFound();
 
-            return Ok(incidentes);
+                return Ok(incidentes);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e.Message));
+            }
+           
         }
 
         /// <summary>
@@ -46,11 +55,20 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(int id)
         {
-            var data = await _incidenteApplication.BuscarAsync(id);
-            if (data == null)
-                return NotFound();
 
-            return Ok(data);
+            try
+            {
+                var data = await _incidenteApplication.BuscarAsync(id);
+                if (data == null)
+                    return NotFound();
+
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e.Message));
+            }
+          
         }
 
         /// <summary>
@@ -63,11 +81,20 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetByUsuario(int idUsuario)
         {
-            var data = await _incidenteApplication.BuscarPorUsuarioAsync(idUsuario);
-            if (data == null)
-                return NotFound();
 
-            return Ok(data);
+            try
+            {
+                var data = await _incidenteApplication.BuscarPorUsuarioAsync(idUsuario);
+                if (data == null)
+                    return NotFound();
+
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e.Message));
+            }
+          
         }
 
         /// <summary>
@@ -98,15 +125,23 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] IncidenteViewModel vm)
         {
-            var entity = vm.Parse();
+            try
+            {
+                var entity = vm.Parse();
 
-            var isValid = entity.IsValid();
+                var isValid = entity.IsValid();
 
-            if (!isValid.Valid)
-                return BadRequest(isValid.Errors);
+                if (!isValid.Valid)
+                    return BadRequest(isValid.Errors);
 
-            await _incidenteApplication.InserirAsync(entity);
-            return Created("GetByIdIncidente", entity.IdIncidente);
+                await _incidenteApplication.InserirAsync(entity);
+                return Created("GetByIdIncidente", entity.IdIncidente);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e.Message));
+            }
+           
 
         }
 
