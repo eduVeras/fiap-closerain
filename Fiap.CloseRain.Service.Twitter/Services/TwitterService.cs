@@ -12,10 +12,10 @@ namespace Fiap.CloseRain.Service.Twitter.Services
     public class TwitterService : ITwitterService
     {
 
-        private readonly string AccessToken = "1126277588668829696-GFGeGza2Gfj2RcLBl1wzhNZfJq3Ddn";
-        private readonly string AccessSecret = "ZImtS05huKKnhCaONpIkIj1eLzFHvOOTOw3TQRpCwToP0";
-        private readonly string ConsumerSecret = "naP0nMEG51TTyJGdFyVd3tSNaCfJncatJo1s6I6JLIOG4t8oHT";
-        private readonly string ConsumerKey = "sN31cBmu0lQbInLiz154UKmAz";
+        private readonly string AccessToken = "";
+        private readonly string AccessSecret = "";
+        private readonly string ConsumerSecret = "";
+        private readonly string ConsumerKey = "";
         public void Lembrar()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
