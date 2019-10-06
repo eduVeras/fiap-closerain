@@ -1,10 +1,10 @@
 ﻿using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Remotion.Linq.Utilities;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -18,7 +18,12 @@ namespace Fiap.CloseRain.Controllers
             _regiaoApplication = regiaoApplication;
         }
 
+        /// <summary>
+        /// Realiza uma busca de todas as regioes cadastradas.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK,Type = typeof(List<Regiao>))]
         public async Task<IActionResult> Get()
         {
             var regioes = await _regiaoApplication.BuscarAsync();
@@ -29,7 +34,11 @@ namespace Fiap.CloseRain.Controllers
             return Ok(regioes);
         }
 
-        // GET: api/Regiao/5
+        /// <summary>
+        /// Busca uma regiao especifica por sua chave de referencia.
+        /// </summary>
+        /// <param name="id">Chave de referencia da Regiao (IdRegiao)</param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetByIdRegiao")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
@@ -46,6 +55,11 @@ namespace Fiap.CloseRain.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Realiza o cadastro de uma nova regiao.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -62,6 +76,12 @@ namespace Fiap.CloseRain.Controllers
 
         }
 
+        /// <summary>
+        /// Atualiza os dados de um regiao com base em sua chave de referencia.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="regiao"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]

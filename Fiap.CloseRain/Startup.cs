@@ -29,6 +29,7 @@ namespace Fiap.CloseRain
             services.AddHealthChecks();
             services.AddEfCore();
             services.AddCors();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",
@@ -39,7 +40,7 @@ namespace Fiap.CloseRain
                         Description = "Serviços referentes ao projeto Close Rain",
                         Contact = new Contact
                         {
-                            Name = "Grupo",
+                            Name = "Grupo CloseRain",
                             Url = "https://github.com/eduveras/fiap-closerain"
                         }
                     });
@@ -51,7 +52,7 @@ namespace Fiap.CloseRain
                 string caminhoXmlDoc =
                     Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
 
-                c.IncludeXmlComments(caminhoXmlDoc);
+                //c.IncludeXmlComments(caminhoXmlDoc);
             });
         }
 
@@ -66,20 +67,23 @@ namespace Fiap.CloseRain
                 app.UseHsts();
             }
 
+            app.UseStaticFiles();
             app.UseCors();
             app.UseHttpsRedirection();
             
-            app.UseMvc();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                    "Conversor de Temperaturas");
+                    "Close Rain");
             });
             app.UseHealthChecks("/check");
 
             app.ExceptionHandler();
+
+            app.UseMvc();
+
         }
     }
 }

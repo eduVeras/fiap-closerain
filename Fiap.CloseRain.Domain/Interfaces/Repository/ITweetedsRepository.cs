@@ -3,7 +3,7 @@ using Fiap.CloseRain.Domain.Interfaces.Base;
 
 namespace Fiap.CloseRain.Domain.Interfaces.Repository
 {
-    public interface IContatoRepository : IBaseRepository<Contato>
+    public interface ITweetedsRepository : IBaseRepository<Tweeteds>
     {
         
     }

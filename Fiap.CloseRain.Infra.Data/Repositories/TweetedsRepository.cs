@@ -4,9 +4,9 @@ using Fiap.CloseRain.Infra.Data.Context;
 
 namespace Fiap.CloseRain.Infra.Data.Repositories
 {
-    public class ContatoRepository : BaseRepository<Contato>, IContatoRepository
+    public class TweetedsRepository : BaseRepository<Tweeteds>, ITweetedsRepository
     {
-        public ContatoRepository(CloseRainContext context) : base(context)
+        public TweetedsRepository(CloseRainContext context) : base(context)
         {
         }
     }
