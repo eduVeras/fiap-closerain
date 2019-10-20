@@ -42,7 +42,11 @@ namespace Fiap.CloseRain.Controllers
                 var user = await _usuarioApplication.Autenticar(entity);
 
                 if (user)
-                    return Ok();
+                    return Ok(new ResultError()
+                    {
+                        Success = true,
+                        Message = string.Empty
+                    });
 
                 return Unauthorized();
             }
