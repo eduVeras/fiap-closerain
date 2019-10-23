@@ -34,7 +34,7 @@ namespace Fiap.CloseRain.Domain.Entities
             if (string.IsNullOrWhiteSpace(Cep))
                 notification.AddError(nameof(Cep), "Cep deve ser informado");
 
-            if (Cep.Length == 8)
+            if (Cep.Length != 8)
                 notification.AddError(nameof(Cep), "Cep inválido.");
 
             if (string.IsNullOrWhiteSpace(Logradouro))
@@ -45,9 +45,6 @@ namespace Fiap.CloseRain.Domain.Entities
 
             if (string.IsNullOrWhiteSpace(Bairro))
                 notification.AddError(nameof(Bairro), "Bairro deve ser informado.");
-
-            if (Logradouro.Length <= 5)
-                notification.AddError(nameof(Bairro), "Bairro inválido.");
 
             if (string.IsNullOrWhiteSpace(Municipio))
                 notification.AddError(nameof(Municipio), "Municipio deve ser informado.");
