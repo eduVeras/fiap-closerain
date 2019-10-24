@@ -1,10 +1,12 @@
-﻿using Fiap.CloseRain.Domain.Entities;
+﻿using System;
+using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Fiap.CloseRain.Models;
 
 namespace Fiap.CloseRain.Controllers
 {
@@ -26,12 +28,19 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK,Type = typeof(List<Regiao>))]
         public async Task<IActionResult> Get()
         {
-            var regioes = await _regiaoApplication.BuscarAsync();
+            try
+            {
+                var regioes = await _regiaoApplication.BuscarAsync();
 
-            if (!regioes.Any())
-                return NotFound();
+                if (!regioes.Any())
+                    return NotFound();
 
-            return Ok(regioes);
+                return Ok(regioes);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
         }
 
         /// <summary>
@@ -45,14 +54,23 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType( (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Get(int id)
         {
-            if (id.Equals(0))
-                return BadRequest("Id deve ser informado");
 
-            var result  = await _regiaoApplication.BuscarAsync(id);
-            if (result == null)
-                return NotFound();
+            try
+            {
+                if (id.Equals(0))
+                    throw new Exception("Id deve ser informado");
 
-            return Ok(result);
+                var result = await _regiaoApplication.BuscarAsync(id);
+                if (result == null)
+                    return NotFound();
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
+            
         }
 
         /// <summary>
@@ -65,15 +83,21 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] Regiao entity)
         {
-            var isValid = entity.IsValid();
+            try
+            {
+                var isValid = entity.IsValid();
 
-            if (!isValid.Valid)
-                return BadRequest(isValid.Errors);
+                if (!isValid.Valid)
+                    return BadRequest(isValid.Errors);
 
-            await _regiaoApplication.InserirAsync(entity);
+                await _regiaoApplication.InserirAsync(entity);
 
-            return Created("/", entity.IdRegiao);
-
+                return Created("/", entity.IdRegiao);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
         }
 
         /// <summary>
@@ -88,14 +112,22 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<IActionResult> Put(int id, [FromBody] Regiao regiao)
         {
-            if (id.Equals(0))
-                return BadRequest(new {Success = false, Mensagem = "Id deve ser preehnchido"});
+            try
+            {
+                if (id.Equals(0))
+                    throw new Exception("Id deve ser preenchido.");
 
-            regiao.IdRegiao = id;
+                regiao.IdRegiao = id;
 
-            await _regiaoApplication.AtualizarAsync(regiao);
+                await _regiaoApplication.AtualizarAsync(regiao);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
+            
         }
     }
 }

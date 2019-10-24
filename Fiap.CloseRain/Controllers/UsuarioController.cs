@@ -1,4 +1,5 @@
-﻿using Fiap.CloseRain.Domain.Entities;
+﻿using System;
+using Fiap.CloseRain.Domain.Entities;
 using Fiap.CloseRain.Domain.Interfaces.Application;
 using Fiap.CloseRain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -29,19 +30,31 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType(typeof(Dictionary<string, string>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Autenticar([FromBody] UsuarioViewModel vm)
         {
-            var entity = vm.Parse();
+            try
+            {
+                var entity = vm.Parse();
 
-            var isValid = entity.IsValid();
+                var isValid = entity.IsValid();
 
-            if (!isValid.Valid)
-                return BadRequest(isValid.Errors);
+                if (!isValid.Valid)
+                    return BadRequest(isValid.Errors);
 
-            var user = await _usuarioApplication.Autenticar(entity);
+                var user = await _usuarioApplication.Autenticar(entity);
 
-            if (user)
-                return Ok();
+                if (user)
+                    return Ok(new ResultError()
+                    {
+                        Success = true,
+                        Message = string.Empty
+                    });
 
-            return Unauthorized();
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
+
         }
 
         /// <summary>
@@ -54,16 +67,22 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType(typeof(Usuario), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> Post([FromBody] UsuarioViewModel vm)
         {
+            try
+            {
+                var entity = vm.Parse();
+                var isValid = entity.IsValid();
 
-            var entity = vm.Parse();
-            var isValid = entity.IsValid();
+                if (!isValid.Valid)
+                    return BadRequest(isValid.Errors);
 
-            if (!isValid.Valid)
-                return BadRequest(isValid.Errors);
+                await _usuarioApplication.InserirAsync(entity);
 
-            await _usuarioApplication.InserirAsync(entity);
-
-            return Created("/", entity.IdUsuario);
+                return Created("GetById", new { entity.IdUsuario });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
         }
 
         /// <summary>
@@ -77,14 +96,22 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType(typeof(List<Usuario>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetById(int id)
         {
-            if (id.Equals(0))
-                return BadRequest("Id deve ser informado");
+            try
+            {
+                if (id.Equals(0))
+                    throw new Exception("Id deve ser informado");
 
-            var result = await _usuarioApplication.BuscarAsync(id);
-            if (result == null)
-                return NotFound();
+                var result = await _usuarioApplication.BuscarAsync(id);
+                if (result == null)
+                    return NotFound();
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
+
         }
 
         /// <summary>
@@ -99,21 +126,23 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<IActionResult> Put(int id, [FromBody] UsuarioViewModel vm)
         {
+            try
+            {
+                if (id.Equals(0))
+                    throw new Exception("Id deve ser preehnchido");
 
+                var entity = vm.Parse();
 
-            if (id.Equals(0))
-                return BadRequest(new { Success = false, Mensagem = "Id deve ser preehnchido" });
+                entity.IdUsuario = id;
 
-            var entity = vm.Parse();
+                await _usuarioApplication.AtualizarAsync(entity);
 
-            entity.IdUsuario = id;
-
-            await _usuarioApplication.AtualizarAsync(entity);
-
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
         }
-
-
-
     }
 }

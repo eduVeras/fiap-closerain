@@ -107,11 +107,18 @@ namespace Fiap.CloseRain.Controllers
         [ProducesResponseType(typeof(Regiao), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetLatest(int qtdRegistro)
         {
-            var data = await _incidenteApplication.BuscarUltimosAsync(qtdRegistro);
-            if (data == null)
-                return NotFound();
+            try
+            {
+                var data = await _incidenteApplication.BuscarUltimosAsync(qtdRegistro);
+                if (data == null)
+                    return NotFound();
 
-            return Ok(data);
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e.Message));
+            }
         }
 
 
@@ -157,17 +164,24 @@ namespace Fiap.CloseRain.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] IncidenteViewModel vm)
         {
 
-            var entity = vm.Parse();
+            try
+            {
+                var entity = vm.Parse();
 
-            var isValid = entity.IsValid();
+                var isValid = entity.IsValid();
 
-            if (!isValid.Valid)
-                return BadRequest(isValid.Errors);
+                if (!isValid.Valid)
+                    return BadRequest(isValid.Errors);
 
-            entity.IdIncidente = id;
-            await _incidenteApplication.AtualizarAsync(entity);
+                entity.IdIncidente = id;
+                await _incidenteApplication.AtualizarAsync(entity);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResultError(e));
+            }
         }
     }
 }

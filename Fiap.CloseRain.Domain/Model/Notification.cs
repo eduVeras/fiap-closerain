@@ -14,7 +14,12 @@ namespace Fiap.CloseRain.Domain.Model
             Data = data;
         }
 
-        public bool Valid { get; set; }
+        public bool Valid
+        {
+            get => !HasErrors();
+            set { }
+        }
+
         public T Data { get; set; }
         public Dictionary<string, string> Errors { get; set; }
         public bool HasErrors() => Errors.Any();

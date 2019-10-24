@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Fiap.CloseRain.Domain.Entities
 {
@@ -19,7 +17,7 @@ namespace Fiap.CloseRain.Domain.Entities
             Nascimento = nascimento;
             Ativo = true;
             DataCadastro = DateTime.Now;
-            SetCryptSenha(senha);
+            Senha = senha;
             Incidentes = new List<Incidente>();
         }
 
@@ -111,35 +109,8 @@ namespace Fiap.CloseRain.Domain.Entities
             this.DataUltimaAtualizacao = DateTime.Now;
         }
 
-        private void GetCryptSenha()
-        {
-
-        }
-
-        private void SetCryptSenha(string password)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("s@F&"));
-                }
-
-                this.Senha = builder.ToString();
-            }
-
-        }
-
         public bool BeOver18(DateTime nascimento)
         {
-
-            TimeSpan a = DateTime.Now.Subtract(nascimento);
-
             var result = nascimento.AddYears(18) > DateTime.Now;
             return nascimento.AddYears(18) < DateTime.Now;
         }
