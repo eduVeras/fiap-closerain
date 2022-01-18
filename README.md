@@ -2,7 +2,7 @@
 
 TCC - Projeto de mapeamento de alagamentos disponibilizado para comunidade, e com integração no Twitter sobre todos os incidentes.
 
-## Technologies implemented
+## Tecnologias utilizadas
 
 - ASP.NET Core 2.2
 - EntityFramework
